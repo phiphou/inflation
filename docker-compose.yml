@@ -1,0 +1,17 @@
+services:
+  dev:
+    image: node:24-alpine
+    working_dir: /app
+    environment:
+      - DOCKER=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: sh -c "corepack enable && pnpm install --ignore-scripts && pnpm dev"
+
+  preview:
+    build: .
+    ports:
+      - "8080:80"
