@@ -17,7 +17,7 @@
       "!test-results",
       "!.git",
       "!src/routeTree.gen.ts",
-      "!src/components/ui/**"
+      "!src/components/ui"
     ]
   },
   "formatter": {
@@ -35,7 +35,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "complexity": {
+        "noImportantStyles": "off"
+      }
     }
   },
   "javascript": {

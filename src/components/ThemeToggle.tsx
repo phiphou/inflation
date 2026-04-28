@@ -11,7 +11,6 @@ export default function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={toggle}
-      className="fixed top-4 right-4"
       aria-label="Toggle theme"
       data-testid="theme-toggle"
     >

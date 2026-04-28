@@ -36,7 +36,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
@@ -81,7 +83,7 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.275 0 0);
+  --border: oklch(0.33 0 0);
   --input: oklch(0.325 0 0);
   --ring: oklch(0.7072 0.1679 242.042);
   --chart-1: oklch(0.81 0.1 252);
@@ -98,7 +100,9 @@
   --sidebar-border: oklch(0.275 0 0);
   --sidebar-ring: oklch(0.439 0 0);
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
@@ -191,4 +195,94 @@
 }
 .stroke-orange {
   stroke: orange;
+}
+
+.recharts-responsive-container:focus,
+.recharts-responsive-container *:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+rect.recharts-brush-slide {
+  fill: #e2e2e2;
+  opacity: 1;
+  fill-opacity: 1;
+  rx: 6;
+}
+
+.dark rect.recharts-brush-slide {
+  fill: #d4d4d8;
+  opacity: 1;
+  fill-opacity: 1;
+  rx: 6;
+}
+
+svg rect:not([class]) {
+  fill: #f0f0f0;
+  stroke-linecap: square;
+  rx: 6;
+  stroke: none;
+}
+
+g.recharts-layer.recharts-brush-traveller > rect {
+  fill: #999999;
+  rx: 2;
+  opacity: 1;
+}
+
+g.recharts-layer.recharts-brush-traveller > line {
+  opacity: 0;
+}
+
+.dark g.recharts-layer.recharts-brush-traveller > rect {
+  fill: #676767;
+  rx: 2;
+  opacity: 1;
+}
+
+.dark g.recharts-layer.recharts-brush-traveller > line {
+  opacity: 0;
+}
+
+.recharts-brush-texts text[text-anchor="start"],
+.recharts-brush-texts text[text-anchor="end"] {
+  fill: #71717a;
+  font-size: 12px;
+}
+
+.dark rect.recharts-brush-slide {
+  fill: #3c3c3c;
+}
+
+.dark svg rect:not([class]) {
+  fill: #282828;
+}
+
+.dark .recharts-brush-texts text[text-anchor="start"],
+.dark .recharts-brush-texts text[text-anchor="end"] {
+  fill: #a1a1a1;
+}
+
+.recharts-legend-wrapper {
+  bottom: -5px !important;
+}
+
+g.recharts-layer.recharts-cartesian-axis-tick-label text {
+  fill: #404040;
+}
+
+.dark g.recharts-layer.recharts-cartesian-axis-tick-label text {
+  fill: #919191;
+}
+
+text.recharts-text.recharts-label {
+  color: #000000;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.dark text.recharts-text.recharts-label {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 400;
 }
