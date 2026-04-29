@@ -6,6 +6,10 @@ const fr = {
     title: 'Revenus en France',
     subtitle:
       "Revenu nominal vs. projection si le pouvoir d'achat de 1980 avait simplement suivi l'inflation.",
+    tabs: {
+      chart: 'Évolution des salaires',
+      calculateur: 'Temps de travail',
+    },
   },
   controls: {
     measure: {
@@ -50,6 +54,15 @@ const fr = {
     netLabel: 'Net',
     netDesc: 'les cotisations salariales sont prises en compte.',
   },
+  calculateur: {
+    priceFrom: 'Prix de départ',
+    priceTo: "Prix d'arrivée",
+    yearFrom: 'Année de départ',
+    yearTo: "Année d'arrivée",
+    salaryType: 'Salaire',
+    diff: 'Écart',
+    noData: '—',
+  },
 }
 
 const en = {
@@ -57,6 +70,10 @@ const en = {
     title: 'French Salaries',
     subtitle:
       'Nominal salary vs. projection if purchasing power had simply followed inflation since 1980.',
+    tabs: {
+      chart: 'Salary evolution',
+      calculateur: 'Working time',
+    },
   },
   controls: {
     measure: {
@@ -100,6 +117,15 @@ const en = {
       '1980 value increased each year by the French inflation rate, with the same legal hours as the nominal.',
     netLabel: 'Net',
     netDesc: 'employee social contributions are taken into account.',
+  },
+  calculateur: {
+    priceFrom: 'Starting price',
+    priceTo: 'Ending price',
+    yearFrom: 'Starting year',
+    yearTo: 'Ending year',
+    salaryType: 'Salary',
+    diff: 'Difference',
+    noData: '—',
   },
 }
 

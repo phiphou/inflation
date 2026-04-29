@@ -57,7 +57,9 @@ export function LocaleToggle() {
         className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium bg-muted hover:bg-muted/80 transition-colors"
       >
         <current.Flag className="w-5 h-auto rounded-[2px]" />
-        <span className="text-muted-foreground">{current.label}</span>
+        <span className="hidden sm:inline text-muted-foreground">
+          {current.label}
+        </span>
         <svg
           className={`w-3 h-3 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`}
           fill="none"

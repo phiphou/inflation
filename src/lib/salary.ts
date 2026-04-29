@@ -18,7 +18,7 @@ function legalHoursPerMonth(year: number): number {
 
 // Facteur d'inflation cumulé depuis BASE_YEAR jusqu'à `toYear`
 // cumulativeInflationFactor(BASE_YEAR) = 1 → les deux courbes partent du même point
-function cumulativeInflationFactor(toYear: number): number {
+export function cumulativeInflationFactor(toYear: number): number {
   let factor = 1
   for (let y = BASE_YEAR; y < toYear; y++) {
     const rate = inflationRates[y]

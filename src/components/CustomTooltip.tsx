@@ -35,7 +35,7 @@ export function CustomTooltip({
         <p className="mt-2 pt-2 border-t border-border text-muted-foreground">
           {t.tooltip.gap} :{' '}
           <span
-            className={`font-mono font-semibold ${gap >= 0 ? 'text-blue-500' : 'text-red-500'}`}
+            className={`font-mono font-semibold ${gap >= 0 ? 'text-green-500' : 'text-red-500'}`}
           >
             {gap >= 0 ? '+' : ''}
             {gap.toFixed(1)} %

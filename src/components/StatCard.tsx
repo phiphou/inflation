@@ -17,7 +17,7 @@ export function StatCard({
     >
       <p className="text-xs text-muted-foreground leading-snug mb-2">{label}</p>
       <p
-        className={`text-2xl font-bold font-mono ${highlight ? 'text-blue-500' : ''}`}
+        className={`text-2xl font-bold font-mono ${highlight ? 'text-green-500' : ''}`}
       >
         {value}
       </p>
