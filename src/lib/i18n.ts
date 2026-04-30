@@ -8,7 +8,7 @@ const fr = {
       "Revenu nominal vs. projection si le pouvoir d'achat de 1980 avait simplement suivi l'inflation.",
     tabs: {
       chart: 'Évolution des salaires',
-      calculateur: 'Temps de travail',
+      calculator: 'Temps de travail',
     },
   },
   controls: {
@@ -54,13 +54,21 @@ const fr = {
     netLabel: 'Net',
     netDesc: 'les cotisations salariales sont prises en compte.',
   },
-  calculateur: {
+  calculator: {
     priceFrom: 'Prix de départ',
     priceTo: "Prix d'arrivée",
     yearFrom: 'Année de départ',
     yearTo: "Année d'arrivée",
     salaryType: 'Salaire',
-    diff: 'Écart',
+    salaryFull: {
+      smic: 'SMIC',
+      mean: 'Salaire moyen',
+      median: 'Salaire médian',
+    },
+    hourlyNet: '€/h net',
+    workingTime: 'Temps',
+    diffSalary: 'Écart salaire',
+    diffTime: 'Écart temps',
     noData: '—',
   },
 }
@@ -72,7 +80,7 @@ const en = {
       'Nominal salary vs. projection if purchasing power had simply followed inflation since 1980.',
     tabs: {
       chart: 'Salary evolution',
-      calculateur: 'Working time',
+      calculator: 'Working time',
     },
   },
   controls: {
@@ -118,13 +126,17 @@ const en = {
     netLabel: 'Net',
     netDesc: 'employee social contributions are taken into account.',
   },
-  calculateur: {
+  calculator: {
     priceFrom: 'Starting price',
     priceTo: 'Ending price',
     yearFrom: 'Starting year',
     yearTo: 'Ending year',
     salaryType: 'Salary',
-    diff: 'Difference',
+    salaryFull: { smic: 'SMIC', mean: 'Mean salary', median: 'Median salary' },
+    hourlyNet: '€/h net',
+    workingTime: 'Working time',
+    diffSalary: 'Salary gap',
+    diffTime: 'Time gap',
     noData: '—',
   },
 }

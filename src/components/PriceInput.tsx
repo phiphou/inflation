@@ -28,7 +28,7 @@ export function PriceInput({
           value={raw}
           onChange={(e) => onRawChange(e.target.value)}
           placeholder={placeholder}
-          className="w-26 rounded-l-md border border-border bg-background px-3 py-1.5 text-sm font-mono outline-none focus:ring-2 focus:ring-ring"
+          className="w-32 rounded-l-md border border-border bg-background px-3 py-1.5 text-sm font-mono outline-none focus:ring-2 focus:ring-ring"
         />
         <div className="flex border border-l-0 border-border rounded-r-md overflow-hidden text-sm font-medium">
           {(['eur', 'frf'] as const).map((c) => (

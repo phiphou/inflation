@@ -12,14 +12,14 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 
-const CalculateurLazyRouteImport = createFileRoute('/calculateur')()
+const CalculatorLazyRouteImport = createFileRoute('/calculator')()
 const IndexLazyRouteImport = createFileRoute('/')()
 
-const CalculateurLazyRoute = CalculateurLazyRouteImport.update({
-  id: '/calculateur',
-  path: '/calculateur',
+const CalculatorLazyRoute = CalculatorLazyRouteImport.update({
+  id: '/calculator',
+  path: '/calculator',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/calculateur.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/calculator.lazy').then((d) => d.Route))
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
@@ -28,37 +28,37 @@ const IndexLazyRoute = IndexLazyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/calculateur': typeof CalculateurLazyRoute
+  '/calculator': typeof CalculatorLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/calculateur': typeof CalculateurLazyRoute
+  '/calculator': typeof CalculatorLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
-  '/calculateur': typeof CalculateurLazyRoute
+  '/calculator': typeof CalculatorLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calculateur'
+  fullPaths: '/' | '/calculator'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculateur'
-  id: '__root__' | '/' | '/calculateur'
+  to: '/' | '/calculator'
+  id: '__root__' | '/' | '/calculator'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  CalculateurLazyRoute: typeof CalculateurLazyRoute
+  CalculatorLazyRoute: typeof CalculatorLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/calculateur': {
-      id: '/calculateur'
-      path: '/calculateur'
-      fullPath: '/calculateur'
-      preLoaderRoute: typeof CalculateurLazyRouteImport
+    '/calculator': {
+      id: '/calculator'
+      path: '/calculator'
+      fullPath: '/calculator'
+      preLoaderRoute: typeof CalculatorLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -73,7 +73,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  CalculateurLazyRoute: CalculateurLazyRoute,
+  CalculatorLazyRoute: CalculatorLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

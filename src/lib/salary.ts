@@ -5,7 +5,7 @@ import { smicData } from '../data/smic'
 
 const HOURS_35H = 151.6663893510815
 const HOURS_39H = 169
-const BASE_YEAR = 1980
+const BASE_YEAR = 1970
 const MAX_YEAR = 2023
 
 // Heures légales mensuelles à une année donnée

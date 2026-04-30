@@ -37,14 +37,14 @@ function Nav() {
           {t.nav.tabs.chart}
         </Link>
         <Link
-          to="/calculateur"
+          to="/calculator"
           className="px-4 py-2 text-sm font-medium rounded-t-md transition-colors text-muted-foreground hover:text-foreground"
           activeProps={{
             className:
               'px-4 py-2 text-sm font-medium rounded-t-md border-b-2 border-primary text-foreground',
           }}
         >
-          {t.nav.tabs.calculateur}
+          {t.nav.tabs.calculator}
         </Link>
       </div>
     </nav>
