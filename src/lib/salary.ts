@@ -5,22 +5,26 @@ import { smicData } from '../data/smic'
 
 const HOURS_35H = 151.6663893510815
 const HOURS_39H = 169
-const BASE_YEAR = 1970
-const MAX_YEAR = 2023
+const HOURS_40H = 173.3
+export const BASE_YEAR = 1950
+const MAX_YEAR = 2026
 
 // Heures légales mensuelles à une année donnée
 // Transition progressive : 35h généralisées à partir de 2002
 function legalHoursPerMonth(year: number): number {
+  if (year <= 1981) return HOURS_40H
   if (year < 2000) return HOURS_39H
   if (year >= 2002) return HOURS_35H
   return HOURS_39H + (HOURS_35H - HOURS_39H) * ((year - 2000) / 4)
 }
 
-// Facteur d'inflation cumulé depuis BASE_YEAR jusqu'à `toYear`
-// cumulativeInflationFactor(BASE_YEAR) = 1 → les deux courbes partent du même point
-export function cumulativeInflationFactor(toYear: number): number {
+// Facteur d'inflation cumulé entre `fromYear` (défaut : BASE_YEAR) et `toYear`
+export function cumulativeInflationFactor(
+  toYear: number,
+  fromYear = BASE_YEAR,
+): number {
   let factor = 1
-  for (let y = BASE_YEAR; y < toYear; y++) {
+  for (let y = fromYear; y < toYear; y++) {
     const rate = inflationRates[y]
     if (rate !== undefined) factor *= 1 + rate / 100
   }

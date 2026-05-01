@@ -64,6 +64,10 @@
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+
+  /** App  **/
+  --low: oklch(0.577 0.245 27.325);
+  --high: oklch(0.6 0.26 145.24);
 }
 
 .dark {
@@ -126,6 +130,10 @@
   --shadow-xl:
     0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+  /** App  **/
+  --low: oklch(0.64 0.23 25);
+  --high: oklch(0.66 0.26 147.52);
 }
 
 @theme inline {
@@ -179,6 +187,11 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  /** App  **/
+
+  --color-low: var(--low);
+  --color-high: var(--high);
 }
 
 @layer base {
@@ -204,43 +217,38 @@
 }
 
 rect.recharts-brush-slide {
-  fill: #e2e2e2;
+  fill: #d8d8d8;
   opacity: 1;
   fill-opacity: 1;
   rx: 6;
 }
 
 .dark rect.recharts-brush-slide {
-  fill: #d4d4d8;
-  opacity: 1;
-  fill-opacity: 1;
-  rx: 6;
+  fill: #3c3c3c;
 }
 
 svg rect:not([class]) {
   fill: #f0f0f0;
+  stroke: none;
   stroke-linecap: square;
   rx: 6;
-  stroke: none;
+}
+
+.dark svg rect:not([class]) {
+  fill: #282828;
 }
 
 g.recharts-layer.recharts-brush-traveller > rect {
-  fill: #999999;
+  fill: #999;
   rx: 2;
   opacity: 1;
-}
-
-g.recharts-layer.recharts-brush-traveller > line {
-  opacity: 0;
 }
 
 .dark g.recharts-layer.recharts-brush-traveller > rect {
   fill: #676767;
-  rx: 2;
-  opacity: 1;
 }
 
-.dark g.recharts-layer.recharts-brush-traveller > line {
+g.recharts-layer.recharts-brush-traveller > line {
   opacity: 0;
 }
 
@@ -248,14 +256,6 @@ g.recharts-layer.recharts-brush-traveller > line {
 .recharts-brush-texts text[text-anchor="end"] {
   fill: #71717a;
   font-size: 12px;
-}
-
-.dark rect.recharts-brush-slide {
-  fill: #3c3c3c;
-}
-
-.dark svg rect:not([class]) {
-  fill: #282828;
 }
 
 .dark .recharts-brush-texts text[text-anchor="start"],
@@ -276,13 +276,11 @@ g.recharts-layer.recharts-cartesian-axis-tick-label text {
 }
 
 text.recharts-text.recharts-label {
-  color: #000000;
+  color: #000;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .dark text.recharts-text.recharts-label {
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 400;
+  color: #fff;
 }

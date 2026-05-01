@@ -4,12 +4,6 @@ export type Measure = 'hourly' | 'monthly' | 'annual'
 export type PayType = 'brut' | 'net'
 export type SalaryType = 'smic' | 'mean' | 'median'
 
-export const SALARY_TYPE_LABELS: Record<SalaryType, string> = {
-  smic: 'SMIC',
-  mean: 'Moyen',
-  median: 'Médian',
-}
-
 export interface ChartPoint {
   year: number
   nominal: number
@@ -22,24 +16,6 @@ export interface ProjectionBase {
   inflationRaw: number
 }
 
-export const MEASURE_LABELS: Record<Measure, string> = {
-  hourly: 'Horaire',
-  monthly: 'Mensuel',
-  annual: 'Annuel',
-}
-
-export const PAY_LABELS: Record<PayType, string> = {
-  brut: 'Brut',
-  net: 'Net',
-}
-
-export const UNIT: Record<Measure, string> = {
-  hourly: '€/h',
-  monthly: '€/mois',
-  annual: '€/an',
-}
-
-// Annuel = mensuel × 12 ; horaire et mensuel ont un multiplicateur de 1
 export const MEASURE_MULTIPLIER: Record<Measure, number> = {
   hourly: 1,
   monthly: 1,

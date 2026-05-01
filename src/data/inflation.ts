@@ -1,4 +1,3 @@
-// Taux d'inflation annuel en France (%), source : données fournies
 export const inflationRates: Record<number, number> = {
   1960: 3.66,
   1961: 3.32,

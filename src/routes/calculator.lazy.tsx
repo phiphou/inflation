@@ -1,5 +1,15 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import { PriceInput } from '../components/PriceInput'
 import { useI18n } from '../lib/i18n'
 import type { AnnualSmicPoint } from '../lib/salary'
@@ -36,11 +46,42 @@ const AVAILABLE_YEARS = [
 ].sort((a, b) => a - b)
 
 function inflationFactor(yearFrom: number, yearTo: number): number {
-  return cumulativeInflationFactor(yearTo) / cumulativeInflationFactor(yearFrom)
+  return cumulativeInflationFactor(yearTo, yearFrom)
 }
 
 const SALARY_TYPES = ['smic', 'mean', 'median'] as const
 type SalaryKey = (typeof SALARY_TYPES)[number]
+
+const CHART_COLORS: Record<SalaryKey, string> = {
+  smic: '#3b82f6',
+  median: '#f97316',
+  mean: '#22c55e',
+}
+
+function CalcTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean
+  payload?: Array<{ name: string; value: number; color: string }>
+  label?: number
+}) {
+  if (!active || !payload?.length) return null
+  return (
+    <div className="bg-background/85 border border-border dark:bg-neutral-950/80 dark:border-white/15 rounded-lg px-4 py-3 shadow-lg text-sm">
+      <p className="font-semibold mb-2">{label}</p>
+      {payload.map((p) => (
+        <p key={p.name} style={{ color: p.color }} className="mb-1">
+          {p.name} :{' '}
+          <span className="font-mono">
+            {typeof p.value === 'number' ? formatDuration(p.value) : '—'}
+          </span>
+        </p>
+      ))}
+    </div>
+  )
+}
 
 export const Route = createLazyFileRoute('/calculator')({
   component: CalculatorPage,
@@ -48,12 +89,13 @@ export const Route = createLazyFileRoute('/calculator')({
 
 function CalculatorPage() {
   const t = useI18n()
+  const [view, setView] = useState<'table' | 'chart'>('chart')
   const [rawFrom, setRawFrom] = useState('')
   const [currencyFrom, setCurrencyFrom] = useState<'eur' | 'frf'>('eur')
-  const [yearFrom, setYearFrom] = useState(1990)
+  const [yearFrom, setYearFrom] = useState(1980)
   const [rawTo, setRawTo] = useState('')
   const [currencyTo, setCurrencyTo] = useState<'eur' | 'frf'>('eur')
-  const [yearTo, setYearTo] = useState(2023)
+  const [yearTo, setYearTo] = useState(2025)
 
   const priceFromEur = useMemo(
     () => parsePrice(rawFrom, currencyFrom),
@@ -65,6 +107,8 @@ function CalculatorPage() {
   )
 
   const showTable = priceFromEur !== null || priceToEur !== null
+  const bothFilled = priceFromEur !== null && priceToEur !== null
+  const effectiveView = bothFilled ? 'table' : view
 
   const factor = inflationFactor(yearFrom, yearTo)
   const toDisplay = (eur: number, currency: 'eur' | 'frf') =>
@@ -124,6 +168,32 @@ function CalculatorPage() {
     return `${value.toFixed(2)}${unit}`
   }
 
+  const { chartData, yMin, yMax } = useMemo(() => {
+    const basePrice =
+      priceFromEur ?? (priceToEur != null ? priceToEur / factor : null)
+    if (!basePrice) return { chartData: [], yMin: 0, yMax: 0 }
+    const chartData = AVAILABLE_YEARS.filter(
+      (y) => y >= yearFrom && y <= yearTo,
+    ).map((y) => {
+      const yearFactor = cumulativeInflationFactor(y, yearFrom)
+      const price = basePrice * yearFactor
+      const point: Record<string, number | null | string> = { year: y }
+      for (const key of SALARY_TYPES) {
+        const rate = YEAR_MAPS[key].get(y)?.hourlyNet ?? null
+        point[key] = rate != null ? price / rate : null
+      }
+      return point
+    })
+    const allValues = chartData.flatMap((p) =>
+      SALARY_TYPES.map((k) => p[k]).filter(
+        (v): v is number => typeof v === 'number',
+      ),
+    )
+    const yMin = allValues.length ? Math.min(...allValues) : 0
+    const yMax = allValues.length ? Math.max(...allValues) : 0
+    return { chartData, yMin, yMax }
+  }, [priceFromEur, priceToEur, yearFrom, yearTo, factor])
+
   const swapAll = () => {
     setRawFrom(rawTo)
     setCurrencyFrom(currencyTo)
@@ -134,8 +204,8 @@ function CalculatorPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-3 sm:mx-auto px-1 sm:px-4 py-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:flex-wrap gap-6 w-full max-w-7xl">
+    <div className="max-w-7xl mx-auto  w-full px-4 pb-6 pt-3 space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:flex-wrap gap-6 w-full">
         {/* From */}
         <div className="flex gap-6 items-end">
           <PriceInput
@@ -210,8 +280,95 @@ function CalculatorPage() {
 
       {showTable && (
         <>
+          {/* Vue toggle */}
+          {!bothFilled && (
+            <div className="flex gap-0.5 bg-muted rounded-lg p-1 w-fit">
+              {(['chart', 'table'] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setView(v)}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${effectiveView === v ? 'bg-background shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+                >
+                  {v === 'table'
+                    ? t.calculator.viewTable
+                    : t.calculator.viewChart}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Graphique */}
+          {effectiveView === 'chart' && (
+            <div className="sm:-mx-4 border border-border rounded-xl bg-card p-6 pl-3 ml-0!">
+              <ResponsiveContainer width="100%" height={580}>
+                <LineChart
+                  data={chartData}
+                  margin={{ top: 12, right: 16, left: 0, bottom: 10 }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="currentColor"
+                    opacity={0.1}
+                  />
+                  <XAxis
+                    dataKey="year"
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    tickFormatter={(v) => formatDuration(v)}
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                    width={80}
+                    domain={[yMin, yMax]}
+                  />
+                  <Tooltip content={<CalcTooltip />} />
+                  <Legend wrapperStyle={{ fontSize: 13 }} />
+                  <Line
+                    type="monotone"
+                    dataKey="smic"
+                    name="SMIC"
+                    stroke={CHART_COLORS.smic}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    connectNulls
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="median"
+                    name={t.controls.salary.median}
+                    stroke={CHART_COLORS.median}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    connectNulls
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="mean"
+                    name={t.controls.salary.mean}
+                    stroke={CHART_COLORS.mean}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    connectNulls
+                    isAnimationActive={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
           {/* Mobile cards */}
-          <div className="sm:hidden space-y-3">
+          <div
+            className={`sm:hidden space-y-3 ${effectiveView !== 'table' ? 'hidden' : ''}`}
+          >
             {rows.map(
               ({
                 key,
@@ -315,8 +472,10 @@ function CalculatorPage() {
           </div>
 
           {/* Desktop table */}
-          <div className="hidden sm:block rounded-lg border border-border overflow-x-auto">
-            <table className="w-full max-w-6xl text-sm">
+          <div
+            className={`rounded-lg border border-border overflow-x-auto mt-8 ${effectiveView !== 'table' ? 'hidden' : 'hidden sm:block'}`}
+          >
+            <table className="w-full text-sm">
               <thead>
                 <tr className="bg-muted text-muted-foreground">
                   <th className="px-4 py-2.5 text-left font-medium">

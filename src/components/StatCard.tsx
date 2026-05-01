@@ -11,13 +11,13 @@ export function StatCard({
 }) {
   return (
     <div
-      className={`rounded-xl border p-4 ${
+      className={`rounded-xl border p-2.5 sm:p-4 ${
         highlight ? 'border-blue-500/30 bg-blue-500/5' : 'border-border bg-card'
       }`}
     >
       <p className="text-xs text-muted-foreground leading-snug mb-2">{label}</p>
       <p
-        className={`text-2xl font-bold font-mono ${highlight ? 'text-green-500' : ''}`}
+        className={`text-xl sm:text-2xl font-bold font-mono ${highlight ? 'text-green-500' : ''}`}
       >
         {value}
       </p>

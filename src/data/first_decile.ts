@@ -1,10 +1,10 @@
-export interface MedianEntry {
+export interface FirstDecileEntry {
   date: string // YYYY-MM-DD
   hourlyBrut: number // euros
   hourlyNet: number // euros
 }
 
-export const medianData: MedianEntry[] = [
+export const medianData: FirstDecileEntry[] = [
   { date: '2025-01-01', hourlyBrut: 18.255, hourlyNet: 14.43962 },
   { date: '2024-01-01', hourlyBrut: 18.01986, hourlyNet: 14.2537 },
   { date: '2023-01-01', hourlyBrut: 17.77930111, hourlyNet: 14.06342718 },

@@ -62,7 +62,7 @@ export function SmicChart({
 
   return (
     <div className="border border-border rounded-xl bg-card p-6 pl-3">
-      <ResponsiveContainer width="100%" height={538}>
+      <ResponsiveContainer width="100%" height={620}>
         <LineChart
           data={data}
           margin={{ top: 12, right: 0, left: 0, bottom: 10 }}
@@ -98,11 +98,28 @@ export function SmicChart({
           />
           <ReferenceLine
             x={2002}
+            className="invisible sm:visible"
             stroke="currentColor"
-            strokeDasharray="4 4"
+            strokeDasharray="3 3"
             opacity={0.35}
             label={{
               value: t.chart.reference35h,
+              className: 'invisible sm:visible',
+              fontSize: 11,
+              fill: 'currentColor',
+              opacity: 0.5,
+              position: 'insideTop',
+            }}
+          />
+          <ReferenceLine
+            x={1982}
+            className="invisible sm:visible"
+            stroke="currentColor"
+            strokeDasharray="3 3"
+            opacity={0.35}
+            label={{
+              value: t.chart.reference39h,
+              className: 'invisible sm:visible',
               fontSize: 11,
               fill: 'currentColor',
               opacity: 0.5,
@@ -114,20 +131,22 @@ export function SmicChart({
             dataKey="nominal"
             name="nominal"
             stroke="#3b82f6"
-            strokeWidth={2.5}
+            strokeWidth={2.3}
             dot={false}
             activeDot={{ r: 4 }}
+            isAnimationActive={false}
           />
           <Line
             type="monotone"
             dataKey={projectionDataKey}
             name="projection"
             stroke="#f97316"
-            strokeWidth={2}
-            strokeDasharray="5 3"
+            strokeWidth={2.3}
+            strokeDasharray="3 3"
             dot={false}
             activeDot={{ r: 4 }}
             connectNulls={false}
+            isAnimationActive={false}
           />
           <Brush
             dataKey="year"

@@ -116,7 +116,7 @@ function SmicPage() {
   }, [])
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6 space-y-4">
+    <div className="max-w-7xl mx-auto  w-full px-4 pb-6 pt-3 space-y-4">
       <KpiCards
         salaryType={salaryType}
         measure={measure}
@@ -149,7 +149,7 @@ function SmicPage() {
         projectionBase={projectionBase}
         onBrushChange={handleBrushChange}
       />
-      <ChartFooter />
+      <ChartFooter startYear={startData.year} />
     </div>
   )
 }

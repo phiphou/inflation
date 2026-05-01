@@ -1,36 +1,6 @@
 import type { Measure, PayType, SalaryType } from '../lib/chart'
 import { useI18n } from '../lib/i18n'
-
-function ToggleGroup<T extends string>({
-  options,
-  value,
-  onChange,
-  labels,
-}: {
-  options: T[]
-  value: T
-  onChange: (v: T) => void
-  labels: Record<T, string>
-}) {
-  return (
-    <div className="flex gap-0.5 bg-muted rounded-lg p-1">
-      {options.map((opt) => (
-        <button
-          key={opt}
-          type="button"
-          onClick={() => onChange(opt)}
-          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-            value === opt
-              ? 'bg-background shadow-sm text-foreground'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          {labels[opt]}
-        </button>
-      ))}
-    </div>
-  )
-}
+import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
 
 export function Controls({
   salaryType,
@@ -50,24 +20,63 @@ export function Controls({
   const t = useI18n()
   return (
     <div className="flex flex-wrap gap-3">
-      <ToggleGroup<SalaryType>
-        options={['smic', 'mean', 'median']}
+      <ToggleGroup
+        type="single"
+        variant="outline"
+        className="gap-0 *:rounded-none [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md [&>*:not(:first-child)]:-ml-px [&>*[data-state=off]]:text-muted-foreground dark:[&>*[data-state=on]]:bg-neutral-700/80"
         value={salaryType}
-        onChange={onSalaryTypeChange}
-        labels={t.controls.salary}
-      />
-      <ToggleGroup<Measure>
-        options={['hourly', 'monthly', 'annual']}
+        onValueChange={(v) => {
+          if (v) onSalaryTypeChange(v as SalaryType)
+        }}
+      >
+        {(['smic', 'mean', 'median'] as SalaryType[]).map((opt) => (
+          <ToggleGroupItem
+            key={opt}
+            value={opt}
+            aria-label={t.controls.salary[opt]}
+          >
+            {t.controls.salary[opt]}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+      <ToggleGroup
+        type="single"
+        variant="outline"
+        className="gap-0 *:rounded-none [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md [&>*:not(:first-child)]:-ml-px [&>*[data-state=off]]:text-muted-foreground dark:[&>*[data-state=on]]:bg-neutral-700/80"
         value={measure}
-        onChange={onMeasureChange}
-        labels={t.controls.measure}
-      />
-      <ToggleGroup<PayType>
-        options={['brut', 'net']}
+        onValueChange={(v) => {
+          if (v) onMeasureChange(v as Measure)
+        }}
+      >
+        {(['hourly', 'monthly', 'annual'] as Measure[]).map((opt) => (
+          <ToggleGroupItem
+            key={opt}
+            value={opt}
+            aria-label={t.controls.measure[opt]}
+          >
+            {t.controls.measure[opt]}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+      <ToggleGroup
+        type="single"
+        variant="outline"
+        className="gap-0 *:rounded-none [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md [&>*:not(:first-child)]:-ml-px [&>*[data-state=off]]:text-muted-foreground dark:[&>*[data-state=on]]:bg-neutral-700/80"
         value={pay}
-        onChange={onPayChange}
-        labels={t.controls.pay}
-      />
+        onValueChange={(v) => {
+          if (v) onPayChange(v as PayType)
+        }}
+      >
+        {(['brut', 'net'] as PayType[]).map((opt) => (
+          <ToggleGroupItem
+            key={opt}
+            value={opt}
+            aria-label={t.controls.pay[opt]}
+          >
+            {t.controls.pay[opt]}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
     </div>
   )
 }
